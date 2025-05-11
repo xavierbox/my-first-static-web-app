@@ -5,12 +5,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+
   <title>Vanilla JavaScript App</title>
 </head>
+
+<script>
+ 
+  class FolderComponent extends HTMLElement {
+    constructor() {
+      super();
+      this.isOpen = false;
+    }
+
+    connectedCallback() {
+      // Render inside the light DOM
+      this.innerHTML = `
+        <style>
+          .folder-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            color: grey;
+            transition: color 0.3s ease;
+          }
+          .folder-icon.open {
+            color: blue;
+          }
+        </style>
+        <i class="fa-solid fa-folder folder-icon"></i>
+      `;
+
+      this.icon = this.querySelector('.folder-icon');
+      this.icon.addEventListener('click', () => this.toggleFolder());
+    }
+
+    toggleFolder() {
+      this.isOpen = !this.isOpen;
+      this.icon.classList.toggle('open', this.isOpen);
+      this.icon.classList.toggle('fa-folder', !this.isOpen);
+      this.icon.classList.toggle('fa-folder-open', this.isOpen);
+    }
+  }
+
+  customElements.define('folder-component', FolderComponent);
+</script>
 
 <body>
   <main>
     <h1>This was a small change...but it is still a vanilla webapp</h1>
+
+    here goes a custom component that is a folder icon
+    <folder-component></folder-component>
   </main>
 </body>
 
